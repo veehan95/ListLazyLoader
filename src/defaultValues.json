@@ -1,0 +1,7 @@
+{
+  "maxInView_init": 10,
+  "increaseSize": 10,
+  "automerge": false,
+  "loadMoreFromExternal": true,
+  "listUpdateAlgorithm": "directAppend"
+}
