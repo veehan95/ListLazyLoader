@@ -1,11 +1,22 @@
 {
   "compilerOptions": {
     "resolveJsonModule": true,
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
+    "moduleResolution": "Node",
     "lib": [ "ES2015", "dom" ],
     "outDir": "./lazyLoader",
     "strict": true,
-    "esModuleInterop": true
-  }
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "removeComments": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/type.ts"
+  ]
 }

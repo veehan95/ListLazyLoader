@@ -5,6 +5,13 @@ export type Setting = {
   increaseSize?: number,
   listUpdateAlgorithm?: ListUpdateAlgorithm,
   loadMoreFromExternal?: boolean,
+  events?: {
+    loading?: string|false,
+    endOfList?: string|false,
+    listUpdated?:  string|false
+  }
 };
 
 export type CallBackFunction<ListItem> = () => Promise<ListItem[]|void>;
+
+export type EventFireFunction = (eventName: string, details?: any) => void
