@@ -8,6 +8,7 @@ export type Setting = {
   events?: {
     loading?: string|false,
     endOfList?: string|false,
+    fullListUpdated?: string|false,
     listUpdated?:  string|false
   }
 };

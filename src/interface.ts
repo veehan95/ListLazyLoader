@@ -9,4 +9,5 @@ export interface ListLoaderInterface<ListItem> {
   eventFire: (eventName: string, details: any) => void
   loadMore(increaseBy: number): void
   updateList(list: ListItem[], listlistUpdateAlgorithm?: ListUpdateAlgorithm): void
+  initList(): void
 };
