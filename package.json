@@ -1,6 +1,6 @@
 {
   "name": "list_lazy_loader",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Controls how the items in a list is loaded",
   "main": "lazyLoader/index.js",
   "scripts": {
