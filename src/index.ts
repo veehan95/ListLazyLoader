@@ -53,21 +53,25 @@ class ListLoader<ListItem> implements ListLoaderInterface<ListItem> {
   }
 
   public updateList(list: ListItem[], listUpdateAlgorithm: ListUpdateAlgorithm = this.setting.listUpdateAlgorithm) {
-    switch (listUpdateAlgorithm) {
-      case "autoMerge":
-        list.forEach((x) => { this._fullList.includes(x) ? null : this._fullList.push(x); });
-        break;
-      case "directAppend":
-        this._fullList = this._fullList.concat(list);
-        break;
-      case "override":
-        this._fullList = list;
-        break;
-      default:
-        throw new Error('Invalid list update algorithm !!');
-        break;
+    if (list == []) {
+      this._endOfList = true;
+    } else {
+      switch (listUpdateAlgorithm) {
+        case "autoMerge":
+          list.forEach((x) => { this._fullList.includes(x) ? null : this._fullList.push(x); });
+          break;
+        case "directAppend":
+          this._fullList = this._fullList.concat(list);
+          break;
+        case "override":
+          this._fullList = list;
+          break;
+        default:
+          throw new Error('Invalid list update algorithm !!');
+          break;
+      }
+      this.trimmer();
     }
-    this.trimmer();
   }
 
   public async loadMore(increaseBy: number = this._setting.increaseSize||0): Promise<void> {
