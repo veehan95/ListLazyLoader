@@ -15,7 +15,8 @@ const theList: ListLoaderInterface<ListItem> = new ListLoader<ListItem>(
 ```
 ### Parameters in constructor
 ##### setting
-Default values
+- Default values
+
 | property | value | description |
 | --- | --- | --- |
 | maxInView_init | 10 | max length of list when first loaded |
@@ -39,3 +40,6 @@ Default values
 ##### listLoadFunction
 
 ##### eventEmitter
+
+
+<h3 id="listUpdateAlgorithm"> listUpdateAlgorithm
