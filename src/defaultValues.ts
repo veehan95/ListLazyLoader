@@ -10,5 +10,6 @@ export const settingDefault: Setting = {
     endOfList: "endOfList",
     listUpdated: "listUpdated",
     fullListUpdated: "fullListUpdated"
-  }
+  },
+  loadMoreRetryInterval: 1000
 }

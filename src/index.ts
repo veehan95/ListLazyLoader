@@ -3,12 +3,7 @@ import { Setting, ListUpdateAlgorithm, CallBackFunction, EventFireFunction } fro
 import { OnChange, SimpleChange } from "property-watch-decorator";
 import { settingDefault } from "./defaultValues";
 import { EventEmitter } from 'events';
-
-function eventFireExecutor<T>(callback: EventFireFunction|undefined, eventName: string|false|undefined, changeDetail: SimpleChange<T>|undefined) {
-  if (callback !== undefined) {
-    if (eventName !== undefined && eventName != false) { callback(eventName, changeDetail); }
-  }
-}
+import { eventFireExecutor } from './utilities';
 
 class ListLoader<ListItem> implements ListLoaderInterface<ListItem> {
   @OnChange<boolean>(function(this: ListLoader<ListItem>, changes, changeDetail) {
@@ -31,7 +26,6 @@ class ListLoader<ListItem> implements ListLoaderInterface<ListItem> {
 
   @OnChange<ListItem[]>(function(this: ListLoader<ListItem>, changes, changeDetail) {
     eventFireExecutor<ListItem[]>(this._eventFire, this.setting!.events!.fullListUpdated, changeDetail);
-    this.trimmer();
   })
   private _fullList:	ListItem[];
   get fullList(): ListItem[] { return this._fullList; }
@@ -58,15 +52,10 @@ class ListLoader<ListItem> implements ListLoaderInterface<ListItem> {
       : async () => { console.warn("No callback for external source.") };
   }
 
-  public initList() {
-    this._listLoader()
-      .then((result: ListItem[]|void) => { this.updateList(result||[]); })
-  }
-
   public updateList(list: ListItem[], listUpdateAlgorithm: ListUpdateAlgorithm = this.setting.listUpdateAlgorithm) {
     switch (listUpdateAlgorithm) {
       case "autoMerge":
-        // this._fullList = list;
+        list.forEach((x) => { this._fullList.includes(x) ? null : this._fullList.push(x); });
         break;
       case "directAppend":
         this._fullList = this._fullList.concat(list);
@@ -78,20 +67,24 @@ class ListLoader<ListItem> implements ListLoaderInterface<ListItem> {
         throw new Error('Invalid list update algorithm !!');
         break;
     }
+    this.trimmer();
   }
 
   public async loadMore(increaseBy: number = this._setting.increaseSize||0): Promise<void> {
-    this._loading = true;
-    if (this._fullList.length < this._list.length + increaseBy) {
-      await this._listLoader()
-        .then((moreList: ListItem[]|void) => moreList ? this.updateList(moreList) : null);
+    if (this._loading == false) {
+      this._loading = true;
+      this._listLoader()
+        .then((result: ListItem[]|void) => { this.updateList(result||[]); })
+        .then(() => { this._loading = false; })
+    } else {
+      await setTimeout(async () => { await this.loadMore() }, this._setting.loadMoreRetryInterval || 0);
     }
-    this.trimmer(this._list.length + increaseBy);
-    this._loading = false;
   }
 
-  private trimmer(increaseTo?: number): void {
-    this._list = this._fullList.slice(0,increaseTo || this._setting.maxInView_init);
+  public resetList(): void { this.trimmer(undefined, true); }
+
+  private trimmer(increaseTo?: number, reset: boolean = false): void {
+    this._list = this._fullList.slice(0,increaseTo || reset ? this._setting.maxInView_init : this._list.length + (this._setting.increaseSize || 0));
   }
 }
 

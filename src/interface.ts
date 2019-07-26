@@ -7,7 +7,7 @@ export interface ListLoaderInterface<ListItem> {
   fullList: ListItem[]
   setting: Setting
   eventFire: (eventName: string, details: any) => void
-  loadMore(increaseBy: number): void
+  loadMore(increaseBy?: number): Promise<void>
   updateList(list: ListItem[], listlistUpdateAlgorithm?: ListUpdateAlgorithm): void
-  initList(): void
+  resetList(): void
 };

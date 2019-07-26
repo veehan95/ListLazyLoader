@@ -10,7 +10,8 @@ export type Setting = {
     endOfList?: string|false,
     fullListUpdated?: string|false,
     listUpdated?:  string|false
-  }
+  },
+  loadMoreRetryInterval?: number
 };
 
 export type CallBackFunction<ListItem> = () => Promise<ListItem[]|void>;

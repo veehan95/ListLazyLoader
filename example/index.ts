@@ -22,9 +22,6 @@ const list: ListItem[] = [
 
 const myEmitter = new EventEmitter();
 
-// myEmitter.on('loading', (x: any) => { console.log(x); });
-// myEmitter.on('endOfList', (x: any) => { console.log(x); });
-// myEmitter.on('fullListUpdated', (x: any) => { console.log(x); });
 
 const theList: ListLoaderInterface<ListItem> = new ListLoader<ListItem>(
   undefined,
@@ -32,17 +29,19 @@ const theList: ListLoaderInterface<ListItem> = new ListLoader<ListItem>(
   (eventName: string, details?: any) => { myEmitter.emit(eventName, details); }
 );
 
+// myEmitter.on('loading', (x: any) => { console.log('loading -> ', x.currentValue); });
+// myEmitter.on('endOfList', (x: any) => { console.log('endOfList -> ', x.currentValue); });
+// myEmitter.on('fullListUpdated', (x: any) => { console.log('fullListUpdated -> ', x.currentValue); });
+myEmitter.on('listUpdated', (x: any) => { console.log(theList.list); });
 
-myEmitter.on('listUpdated', (x: any) => {
-  console.log(x);
-  console.log(theList.list);
-});
 
-
-theList.initList();
-// theList.updateList(list);
-// console.log("Preview list - initial");
-// console.table(theList.list);
+theList.loadMore()
+  .then(async () => { theList.loadMore(); })
+  .then(async () => { console.log('-->>');theList.resetList();console.log('<<--'); })
+  .then(async () => { theList.loadMore(); })
+  .then(async () => { theList.loadMore(); })
+  .then(async () => { theList.loadMore(); })
+  .then(async () => { theList.loadMore(); });
 
 
 
