@@ -1,8 +1,9 @@
 {
   "name": "list_lazy_loader",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "Controls how the items in a list is loaded",
   "main": "lazyLoader/index.js",
+  "types": "lazyLoader/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "tsc --build",
