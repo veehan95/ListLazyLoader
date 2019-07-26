@@ -1,0 +1,6 @@
+./example
+./src
+./test
+jest.config.js
+.gitattributes
+tsconfig.json

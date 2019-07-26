@@ -1,21 +1,23 @@
 {
-  "name": "lazylist",
-  "version": "1.0.0",
+  "name": "list_lazy_loader",
+  "version": "1.0.3",
   "description": "Controls how the items in a list is loaded",
   "main": "lazyLoader/index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc",
+    "build": "tsc --build",
     "exec:js": "node lazyLoader/index.js",
     "example:ts": "ts-node example/index.ts"
   },
   "author": "Tan Vee Han (veehan95@gmail.com)",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "property-watch-decorator": "^1.2.5"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.8",
     "jest": "^24.8.0",
+    "@types/node": "^12.6.8",
     "property-watch-decorator": "^1.2.5",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.3"
